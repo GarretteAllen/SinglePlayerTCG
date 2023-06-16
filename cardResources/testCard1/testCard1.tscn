@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://db67jieipoc8v"]
+
+[node name="testCard1" type="Node2D"]
+
+[node name="InHand" type="Sprite2D" parent="."]
+
+[node name="Played" type="Sprite2D" parent="."]

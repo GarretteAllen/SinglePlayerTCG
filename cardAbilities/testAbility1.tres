@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Abilities" load_steps=2 format=3 uid="uid://dy4rbk4cv2wjl"]
+
+[ext_resource type="Script" path="res://scripts/cardAbilities.gd" id="1_p2lnh"]
+
+[resource]
+script = ExtResource("1_p2lnh")
+name = "Test Ability 1"
+type = "Fire"
+attack = 1
+cost = 1
