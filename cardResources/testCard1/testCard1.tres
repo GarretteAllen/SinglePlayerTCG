@@ -1,11 +1,14 @@
-[gd_resource type="Resource" script_class="Card" load_steps=3 format=3 uid="uid://dn32kul3jfmbf"]
+[gd_resource type="Resource" script_class="Card" load_steps=4 format=3 uid="uid://dn32kul3jfmbf"]
 
 [ext_resource type="Resource" uid="uid://dy4rbk4cv2wjl" path="res://cardAbilities/testAbility1.tres" id="1_vbvyf"]
+[ext_resource type="PackedScene" uid="uid://db67jieipoc8v" path="res://cardResources/testCard1/testCard1.tscn" id="2_6r3nv"]
 [ext_resource type="Script" path="res://scripts/card.gd" id="2_u6om0"]
 
 [resource]
 script = ExtResource("2_u6om0")
 name = "Test Card 1"
+description = ""
+graphics = ExtResource("2_6r3nv")
 inHand = false
 type = 0
 abilities = Array[Resource]([ExtResource("1_vbvyf")])

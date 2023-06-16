@@ -1,7 +1,7 @@
 extends Node2D
 
 var _cardFactory: cardFactory
-var _cardInstance: Card
+#var _cardInstance: Card
 
 func _ready():
 	
@@ -9,7 +9,13 @@ func _ready():
 	_cardFactory = cardFactory.new()
 	
 	# Retrieve card data
-	var cardData = load("res://cardResources/testCard1.tres")
-	var cardSprite = _cardFactory.createCardSprite(cardData)
-	add_child(cardSprite)
+	var table = "CardInventory"
+	var cardData = DBConnect.testRead(table)
+	var cardScene = _cardFactory.instanceCards(cardData)
+	for i in cardScene:
+		var cardInstance = i.instantiate()
+		add_child(cardInstance)
+	
+	
+	
 	

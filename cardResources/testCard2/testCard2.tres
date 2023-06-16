@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="Card" load_steps=4 format=3 uid="uid://bgud4pin5nwqy"]
+
+[ext_resource type="Resource" uid="uid://dy4rbk4cv2wjl" path="res://cardAbilities/testAbility1.tres" id="1_fis50"]
+[ext_resource type="PackedScene" uid="uid://37m1nyfbqu8q" path="res://cardResources/testCard2/testCard2.tscn" id="2_stj8h"]
+[ext_resource type="Script" path="res://scripts/card.gd" id="3_0dthv"]
+
+[resource]
+script = ExtResource("3_0dthv")
+name = "Test Card 2"
+description = ""
+graphics = ExtResource("2_stj8h")
+inHand = false
+type = 0
+abilities = Array[Resource]([ExtResource("1_fis50")])
+cost = 0
+attack = 0
+health = 0

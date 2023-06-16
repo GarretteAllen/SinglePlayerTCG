@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://37m1nyfbqu8q"]
+
+[ext_resource type="Texture2D" uid="uid://csca4ttt1ip4c" path="res://icon.svg" id="1_6ywvy"]
+
+[node name="testCard2" type="Node2D"]
+
+[node name="InHand" type="Sprite2D" parent="."]
+texture = ExtResource("1_6ywvy")
+
+[node name="Played" type="Sprite2D" parent="."]
+visible = false

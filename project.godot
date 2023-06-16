@@ -13,6 +13,10 @@ config_version=5
 config/name="SinglePlayerTCG"
 config/features=PackedStringArray("4.0", "GL Compatibility")
 
+[autoload]
+
+DBConnect="*res://autoload/globals/databaseConnection.gd"
+
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/godot-sqlite/plugin.cfg")
