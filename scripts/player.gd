@@ -5,7 +5,10 @@ const isPlayer: bool = true
 @export var walk_speed = 4.0
 @onready var animTree = $AnimationTree
 @onready var animState = animTree["parameters/playback"]
-const TILE_SIZE = 16
+@onready var collisionRay = $Collision
+@onready var interactionRay = $Interaction
+
+const TILE_SIZE = 32
 
 var initialPosition = Vector2(0, 0)
 var inputDirection = Vector2(0, 0)
@@ -40,10 +43,20 @@ func processPlayerInput():
 		animState.travel("Idle")
 		
 func playerMove(delta):
-	percentMovedToNextTile += walk_speed * delta
-	if percentMovedToNextTile >= 1.0:
-		position = initialPosition + (TILE_SIZE * inputDirection)
+	var desiredStep: Vector2 = inputDirection * TILE_SIZE / 2
+	collisionRay.target_position = desiredStep
+	if !collisionRay.is_colliding():
+		percentMovedToNextTile += walk_speed * delta
+		if percentMovedToNextTile >= 1.0:
+			position = initialPosition + (TILE_SIZE * inputDirection)
+			percentMovedToNextTile = 0.0
+			isMoving = false
+		else:
+			position = initialPosition + (TILE_SIZE * inputDirection * percentMovedToNextTile)
+	else:
+		animState.travel("Idle")
 		percentMovedToNextTile = 0.0
 		isMoving = false
-	else:
-		position = initialPosition + (TILE_SIZE * inputDirection * percentMovedToNextTile)
+		
+func interaction():
+	pass

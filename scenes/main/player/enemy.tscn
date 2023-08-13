@@ -1,18 +1,17 @@
-[gd_scene load_steps=28 format=3 uid="uid://dogrp0hbu337v"]
+[gd_scene load_steps=26 format=3 uid="uid://ccs76ma86w87c"]
 
-[ext_resource type="Texture2D" uid="uid://b6cuac4oobhux" path="res://gfx/player/playersprite.png" id="1_4p6sa"]
-[ext_resource type="Script" path="res://scripts/player.gd" id="1_fsh11"]
+[ext_resource type="Texture2D" uid="uid://b6cuac4oobhux" path="res://gfx/player/playersprite.png" id="2_itbha"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_sbqfi"]
-radius = 15.0
-height = 50.0
+radius = 16.0
+height = 59.1174
 
 [sub_resource type="Animation" id="Animation_mokoq"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("playerSprite:frame")
+tracks/0/path = NodePath("enemySprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -29,7 +28,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("playerSprite:frame")
+tracks/0/path = NodePath("enemySprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -46,7 +45,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("playerSprite:frame")
+tracks/0/path = NodePath("enemySprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -63,7 +62,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("playerSprite:frame")
+tracks/0/path = NodePath("enemySprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -80,7 +79,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("playerSprite:frame")
+tracks/0/path = NodePath("enemySprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -97,7 +96,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("playerSprite:frame")
+tracks/0/path = NodePath("enemySprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -114,7 +113,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("playerSprite:frame")
+tracks/0/path = NodePath("enemySprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -131,7 +130,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("playerSprite:frame")
+tracks/0/path = NodePath("enemySprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -148,7 +147,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("playerSprite:frame")
+tracks/0/path = NodePath("enemySprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -228,23 +227,18 @@ states/Walk/node = SubResource("AnimationNodeBlendSpace2D_85dqw")
 states/Walk/position = Vector2(320, 51)
 transitions = ["Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_kvvex"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_fx4la")]
 
-[sub_resource type="TileSet" id="TileSet_tpgbh"]
-tile_size = Vector2i(32, 32)
+[node name="enemyBody" type="CharacterBody2D"]
+collision_layer = 4
 
-[node name="playerBody" type="CharacterBody2D"]
-z_index = 1
-collision_mask = 6
-script = ExtResource("1_fsh11")
-
-[node name="playerSprite" type="Sprite2D" parent="."]
+[node name="enemySprite" type="Sprite2D" parent="."]
 position = Vector2(16, 0)
 scale = Vector2(0.75, 0.75)
-texture = ExtResource("1_4p6sa")
+texture = ExtResource("2_itbha")
 hframes = 4
 vframes = 4
 
 [node name="collisionShape" type="CollisionShape2D" parent="."]
-position = Vector2(16, 0)
+position = Vector2(15.764, 2.12373)
 shape = SubResource("CapsuleShape2D_sbqfi")
 
 [node name="playerAnimation" type="AnimationPlayer" parent="."]
@@ -259,20 +253,9 @@ active = true
 parameters/Idle/blend_position = Vector2(0, 0)
 parameters/Walk/blend_position = Vector2(0, 0)
 
-[node name="Collision" type="RayCast2D" parent="."]
-position = Vector2(16, 16)
-target_position = Vector2(0, 32)
-collision_mask = 6
+[node name="interactArea" type="Area2D" parent="."]
+collision_layer = 4
 
-[node name="Interaction" type="RayCast2D" parent="."]
-position = Vector2(16, 16)
-target_position = Vector2(0, 32)
-collision_mask = 6
-collide_with_areas = true
-collide_with_bodies = false
-
-[node name="Camera2D" type="Camera2D" parent="."]
-
-[node name="TileMap" type="TileMap" parent="."]
-tile_set = SubResource("TileSet_tpgbh")
-format = 2
+[node name="interactShape" type="CollisionShape2D" parent="interactArea"]
+position = Vector2(15.764, 2.12373)
+shape = SubResource("CapsuleShape2D_sbqfi")
