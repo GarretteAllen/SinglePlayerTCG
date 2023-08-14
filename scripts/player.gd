@@ -22,6 +22,7 @@ func _ready():
 func _physics_process(delta):
 	if isMoving == false:
 		processPlayerInput()
+		interaction()
 	elif inputDirection != Vector2.ZERO:
 		animState.travel("Walk")
 		playerMove(delta)
@@ -45,18 +46,20 @@ func processPlayerInput():
 func playerMove(delta):
 	var desiredStep: Vector2 = inputDirection * TILE_SIZE / 2
 	collisionRay.target_position = desiredStep
+	interactionRay.target_position = desiredStep
 	if !collisionRay.is_colliding():
 		percentMovedToNextTile += walk_speed * delta
 		if percentMovedToNextTile >= 1.0:
-			position = initialPosition + (TILE_SIZE * inputDirection)
+			position = initialPosition.snapped(Vector2(0,0)) + (TILE_SIZE * inputDirection)
 			percentMovedToNextTile = 0.0
 			isMoving = false
 		else:
-			position = initialPosition + (TILE_SIZE * inputDirection * percentMovedToNextTile)
+			position = initialPosition.snapped(Vector2(0,0)) + (TILE_SIZE * inputDirection * percentMovedToNextTile)
 	else:
 		animState.travel("Idle")
 		percentMovedToNextTile = 0.0
 		isMoving = false
 		
 func interaction():
-	pass
+	if !isMoving && interactionRay.is_colliding():
+		pass
