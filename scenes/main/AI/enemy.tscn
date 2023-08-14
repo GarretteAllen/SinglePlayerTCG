@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/enemy.gd" id="1_d2dxj"]
 [ext_resource type="Texture2D" uid="uid://b6cuac4oobhux" path="res://gfx/player/playersprite.png" id="2_itbha"]
+[ext_resource type="Script" path="res://addons/dialogue_manager/dialogue_label.gd" id="3_f3mtg"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p7mhe"]
 size = Vector2(32, 32)
@@ -227,10 +228,6 @@ states/Walk/node = SubResource("AnimationNodeBlendSpace2D_85dqw")
 states/Walk/position = Vector2(320, 51)
 transitions = ["Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_kvvex"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_fx4la")]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_sbqfi"]
-radius = 18.236
-height = 59.1174
-
 [node name="enemyBody" type="CharacterBody2D"]
 collision_layer = 4
 script = ExtResource("1_d2dxj")
@@ -261,9 +258,19 @@ parameters/Walk/blend_position = Vector2(0, 0)
 
 [node name="interactArea" type="Area2D" parent="."]
 collision_layer = 8
-collision_mask = 0
 
 [node name="interactShape" type="CollisionShape2D" parent="interactArea"]
-visible = false
-position = Vector2(15.764, 2.12373)
-shape = SubResource("CapsuleShape2D_sbqfi")
+z_index = 2
+position = Vector2(16, 16)
+shape = SubResource("RectangleShape2D_p7mhe")
+
+[node name="Dialogue" type="RichTextLabel" parent="."]
+offset_left = -32.0
+offset_top = -106.0
+offset_right = 69.0
+offset_bottom = -24.0
+text = "Test this shit"
+script = ExtResource("3_f3mtg")
+
+[connection signal="body_entered" from="interactArea" to="." method="_on_interact_area_body_entered"]
+[connection signal="body_exited" from="interactArea" to="." method="_on_interact_area_body_exited"]

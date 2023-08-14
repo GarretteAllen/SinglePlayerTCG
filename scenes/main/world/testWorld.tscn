@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://pige0qqk3n4h"]
+[gd_scene load_steps=8 format=3 uid="uid://pige0qqk3n4h"]
 
 [ext_resource type="PackedScene" uid="uid://dogrp0hbu337v" path="res://scenes/main/player/player.tscn" id="1_hhxme"]
 [ext_resource type="Script" path="res://scenes/main/world/testWorld.gd" id="1_nwng2"]
 [ext_resource type="PackedScene" uid="uid://ccs76ma86w87c" path="res://scenes/main/AI/enemy.tscn" id="3_vii65"]
 [ext_resource type="Texture2D" uid="uid://dvghuahjgbq7p" path="res://gfx/tiles/BW_PublicOutside_New.png" id="4_8wnc8"]
+[ext_resource type="Script" path="res://addons/dialogue_manager/dialogue_label.gd" id="5_5iiit"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_egk7p"]
 texture = ExtResource("4_8wnc8")
@@ -160,8 +161,7 @@ sources/0 = SubResource("TileSetAtlasSource_egk7p")
 script = ExtResource("1_nwng2")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="playerBody" parent="CanvasLayer" instance=ExtResource("1_hhxme")]
+follow_viewport_enabled = true
 
 [node name="enemyBody" parent="CanvasLayer" instance=ExtResource("3_vii65")]
 z_index = 1
@@ -173,3 +173,15 @@ tile_set = SubResource("TileSet_jqetv")
 cell_quadrant_size = 32
 format = 2
 layer_0/tile_data = PackedInt32Array(2, 327680, 9, 196611, 458752, 7, 65539, 458752, 7, 4, 327680, 9, 196613, 458752, 7, 65541, 458752, 7, 6, 327680, 9, 131078, 458752, 7, 196615, 458752, 7, 65543, 458752, 7, 8, 327680, 9, 131080, 458752, 7, 262152, 393216, 7, 262151, 393216, 8, 262150, 393216, 7, 262149, 393216, 8, 262148, 393216, 7, 262147, 393216, 8, 262146, 393216, 7, 262145, 393216, 8, 196609, 458752, 7, 65537, 458752, 7, 0, 458752, 9, 131071, 458752, 7, 262143, 458752, 7, 262144, 393216, 7, 327679, 393216, 8, 65534, 458752, 9, 196606, 458752, 7, 262141, 458752, 7, 327677, 393216, 8, 131069, 458752, 7, 131072, 458752, 7, 131074, 458752, 7, 131076, 458752, 7, 65532, 458752, 9, 196604, 327680, 7, 327676, 393216, 7, 393212, 393216, 8, 393213, 393216, 8, 393215, 393216, 8, 327680, 393216, 8, 327681, 393216, 8, 327682, 393216, 8, 327683, 393216, 8, 327684, 393216, 8, 327685, 393216, 8, 327686, 393216, 8, 327687, 393216, 8, 327688, 393216, 8, 327689, 393216, 8, 262153, 393216, 8, 196617, 458752, 7, 65545, 458752, 7, -65527, 327680, 7, -65529, 327680, 7, -65533, 327680, 7, -65535, 327680, 7, -1, 327680, 7, -3, 327680, 7, -5, 458752, 9, 131067, 458752, 7, 262139, 458752, 7, 327675, 393216, 8, 327674, 327680, 7, 393210, 327680, 8, 393211, 393216, 8, 65530, 327680, 9, 196602, 327680, 7, 458746, 327680, 9, 458747, 393216, 9, 458748, 393216, 9, 458749, 393216, 9, 458750, 393216, 9, 458751, 393216, 9, 393216, 393216, 9, 393217, 393216, 9, 393218, 393216, 9, 393219, 393216, 9, 393220, 393216, 9, 393221, 393216, 9, 393222, 393216, 9, 393223, 393216, 9, 393224, 393216, 9, 393225, 393216, 9, 393226, 393216, 9, 327690, 393216, 8, 262154, 393216, 7, 131082, 458752, 7, 10, 327680, 9, -65525, 327680, 7, 65547, 458752, 7, 196619, 327680, 7, 262155, 393216, 8, 327691, 393216, 8, 393227, 393216, 9, 393228, 458752, 9, 327692, 458752, 8, 262156, 458752, 7, 131084, 458752, 7, 12, 458752, 9, 327678, 393216, 7, 393214, 393216, 8, -65531, 327680, 9)
+
+[node name="Camera2D" type="Camera2D" parent="CanvasLayer"]
+
+[node name="playerBody" parent="CanvasLayer/Camera2D" instance=ExtResource("1_hhxme")]
+
+[node name="DialogueLabel" type="RichTextLabel" parent="CanvasLayer"]
+offset_left = 64.0
+offset_top = 160.0
+offset_right = 288.0
+offset_bottom = 200.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+script = ExtResource("5_5iiit")

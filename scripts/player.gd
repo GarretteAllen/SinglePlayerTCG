@@ -1,24 +1,39 @@
 extends CharacterBody2D
 class_name Player
 
-const isPlayer: bool = true
-@export var walk_speed = 4.0
+# Variables to access nodes
+
 @onready var animTree = $AnimationTree
 @onready var animState = animTree["parameters/playback"]
 @onready var collisionRay = $Collision
 @onready var interactionRay = $Interaction
+@onready var interactionShape = $interactionArea/interactionShape
+
+# Set const for tile size. If grid changes size update!!!!
 
 const TILE_SIZE = 32
 
+# Movement variables
+
+const isPlayer: bool = true
 var initialPosition = Vector2(0, 0)
 var inputDirection = Vector2(0, 0)
 var isMoving = false
 var percentMovedToNextTile = 0.0
+@export var walk_speed = 4.0
 
+# Various variables and signals 
+
+signal interactPressed
+
+
+# Set initial position
 func _ready():
 	initialPosition = position
 	
-	
+# If character is not moving process player input to detect keystrokes and move.
+# In future will also handle interactions the same way, if character not moving/colliding then interact.
+
 func _physics_process(delta):
 	if isMoving == false:
 		processPlayerInput()
@@ -29,6 +44,8 @@ func _physics_process(delta):
 	else:
 		isMoving = false
 		animState.travel("Idle")
+
+# Handle the player's input and choose animation from tree
 
 func processPlayerInput():
 	if inputDirection.y == 0:
@@ -42,7 +59,9 @@ func processPlayerInput():
 		isMoving = true
 	else:
 		animState.travel("Idle")
-		
+
+# Handle movement along the grid
+
 func playerMove(delta):
 	var desiredStep: Vector2 = inputDirection * TILE_SIZE / 2
 	collisionRay.target_position = desiredStep
@@ -59,7 +78,10 @@ func playerMove(delta):
 		animState.travel("Idle")
 		percentMovedToNextTile = 0.0
 		isMoving = false
-		
+
+# Handle player interaction ** WIP **
 func interaction():
 	if !isMoving && interactionRay.is_colliding():
-		pass
+		if Input.is_action_just_pressed("Accept"):
+			interactPressed.emit()
+			DialogueManager.dialogue_ended
