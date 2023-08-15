@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://pige0qqk3n4h"]
+[gd_scene load_steps=8 format=3 uid="uid://pige0qqk3n4h"]
 
 [ext_resource type="PackedScene" uid="uid://dogrp0hbu337v" path="res://scenes/main/player/player.tscn" id="1_hhxme"]
 [ext_resource type="Script" path="res://scenes/main/world/testWorld.gd" id="1_nwng2"]
 [ext_resource type="PackedScene" uid="uid://ccs76ma86w87c" path="res://scenes/main/AI/enemy.tscn" id="3_vii65"]
 [ext_resource type="Texture2D" uid="uid://dvghuahjgbq7p" path="res://gfx/tiles/BW_PublicOutside_New.png" id="4_8wnc8"]
+[ext_resource type="Script" path="res://addons/dialogue_manager/dialogue_label.gd" id="5_5iiit"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_egk7p"]
 texture = ExtResource("4_8wnc8")
@@ -166,6 +167,7 @@ follow_viewport_enabled = true
 z_index = 1
 position = Vector2(320, 32)
 collision_layer = 6
+enemyName = null
 
 [node name="TileMap" type="TileMap" parent="CanvasLayer"]
 tile_set = SubResource("TileSet_jqetv")
@@ -176,3 +178,11 @@ layer_0/tile_data = PackedInt32Array(2, 327680, 9, 196611, 458752, 7, 65539, 458
 [node name="Camera2D" type="Camera2D" parent="CanvasLayer"]
 
 [node name="playerBody" parent="CanvasLayer/Camera2D" instance=ExtResource("1_hhxme")]
+
+[node name="DialogueLabel" type="RichTextLabel" parent="CanvasLayer"]
+offset_left = 64.0
+offset_top = 160.0
+offset_right = 288.0
+offset_bottom = 200.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+script = ExtResource("5_5iiit")

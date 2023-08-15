@@ -101,7 +101,7 @@ func start(dialogue_resource: DialogueResource, title: String, extra_game_states
 	is_waiting_for_input = false
 	resource = dialogue_resource
 
-	self.dialogue_line = await resource.get_next_dialogue_line(title, temporary_game_states)
+	self.dialogue_line = await resource.get_next_dialogue_line(title, temporary_game_states) 
 
 
 ## Go to the next line

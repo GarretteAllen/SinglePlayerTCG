@@ -58,6 +58,8 @@ enum TranslationSource {
 # The list of globals that dialogue can query
 var game_states: Array = []
 
+var enemy = Enemy.new()
+
 # Allow dialogue to call singletons
 var include_singletons: bool = true
 
@@ -108,6 +110,7 @@ func get_next_dialogue_line(resource: DialogueResource, key: String = "0", extra
 
 	# If our dialogue is nothing then we hit the end
 	if not is_valid(dialogue):
+		playerVariables.isTalking = false
 		dialogue_ended.emit(resource)
 		return null
 
@@ -123,6 +126,7 @@ func get_next_dialogue_line(resource: DialogueResource, key: String = "0", extra
 				pass
 		if actual_next_id in [DialogueConstants.ID_END_CONVERSATION, DialogueConstants.ID_NULL, null]:
 			# End the conversation
+			playerVariables.isTalking = false
 			dialogue_ended.emit(resource)
 			return null
 		else:
@@ -222,7 +226,7 @@ func create_resource_from_text(text: String) -> Resource:
 
 
 ## Show the example balloon
-func show_example_dialogue_balloon(resource: DialogueResource, title: String = "0", extra_game_states: Array = []) -> void:
+func show_example_dialogue_balloon(resource: DialogueResource, title: String = "0", extra_game_states: Array = [], mutation_behaviour: MutationBehaviour = MutationBehaviour.Wait) -> void:
 	var ExampleBalloonScene = load("res://addons/dialogue_manager/example_balloon/example_balloon.tscn")
 	var SmallExampleBalloonScene = load("res://addons/dialogue_manager/example_balloon/small_example_balloon.tscn")
 

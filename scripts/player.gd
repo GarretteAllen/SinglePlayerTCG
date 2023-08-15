@@ -25,17 +25,19 @@ var percentMovedToNextTile = 0.0
 # Various variables and signals 
 
 signal interactPressed
-
+@onready var inDialogue: bool = false
 
 # Set initial position
+
 func _ready():
 	initialPosition = position
+	playerVariables.isTalking = false
 	
 # If character is not moving process player input to detect keystrokes and move.
 # In future will also handle interactions the same way, if character not moving/colliding then interact.
 
 func _physics_process(delta):
-	if isMoving == false:
+	if isMoving == false && playerVariables.isTalking == false:
 		processPlayerInput()
 		interaction()
 	elif inputDirection != Vector2.ZERO:
@@ -80,8 +82,16 @@ func playerMove(delta):
 		isMoving = false
 
 # Handle player interaction ** WIP **
+
 func interaction():
 	if !isMoving && interactionRay.is_colliding():
 		if Input.is_action_just_pressed("Accept"):
 			interactPressed.emit()
-			DialogueManager.dialogue_ended
+
+
+func _on_interaction_area_area_entered(_area):
+	pass # Replace with function body.
+
+
+func _on_interaction_area_area_exited(_area):
+	pass # Replace with function body.

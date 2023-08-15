@@ -11,12 +11,14 @@ config_version=5
 [application]
 
 config/name="SinglePlayerTCG"
+run/main_scene="res://scenes/main/world/testWorld.tscn"
 config/features=PackedStringArray("4.1", "GL Compatibility")
 
 [autoload]
 
 DBConnect="*res://autoload/globals/databaseConnection.gd"
 DialogueManager="*res://addons/dialogue_manager/dialogue_manager.gd"
+playerVariables="*res://globals/playerVariables.gd"
 
 [editor_plugins]
 
