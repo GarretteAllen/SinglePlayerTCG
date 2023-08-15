@@ -1,10 +1,10 @@
-[gd_scene load_steps=28 format=3 uid="uid://dogrp0hbu337v"]
+[gd_scene load_steps=29 format=3 uid="uid://dogrp0hbu337v"]
 
 [ext_resource type="Texture2D" uid="uid://b6cuac4oobhux" path="res://gfx/player/playersprite.png" id="1_4p6sa"]
-[ext_resource type="Script" path="res://scripts/player.gd" id="1_suf74"]
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_cl850"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_sbqfi"]
-radius = 15.0
+radius = 16.353
 height = 50.0
 
 [sub_resource type="Animation" id="Animation_mokoq"]
@@ -228,20 +228,28 @@ states/Walk/node = SubResource("AnimationNodeBlendSpace2D_85dqw")
 states/Walk/position = Vector2(320, 51)
 transitions = ["Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_kvvex"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_fx4la")]
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_3awj8"]
+[sub_resource type="TileSet" id="TileSet_tpgbh"]
+tile_size = Vector2i(32, 32)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_668vx"]
+radius = 16.0
+height = 64.0
 
 [node name="playerBody" type="CharacterBody2D"]
-collision_mask = 2
-script = ExtResource("1_suf74")
+z_index = 1
+y_sort_enabled = true
+collision_mask = 6
+script = ExtResource("1_cl850")
 
 [node name="playerSprite" type="Sprite2D" parent="."]
+position = Vector2(16, 0)
 scale = Vector2(0.75, 0.75)
 texture = ExtResource("1_4p6sa")
 hframes = 4
 vframes = 4
 
 [node name="collisionShape" type="CollisionShape2D" parent="."]
-position = Vector2(2, 0)
+position = Vector2(16, 0)
 shape = SubResource("CapsuleShape2D_sbqfi")
 
 [node name="playerAnimation" type="AnimationPlayer" parent="."]
@@ -253,6 +261,34 @@ libraries = {
 tree_root = SubResource("AnimationNodeStateMachine_6jpfl")
 anim_player = NodePath("../playerAnimation")
 active = true
-parameters/playback = SubResource("AnimationNodeStateMachinePlayback_3awj8")
 parameters/Idle/blend_position = Vector2(0, 0)
 parameters/Walk/blend_position = Vector2(0, 0)
+
+[node name="Collision" type="RayCast2D" parent="."]
+position = Vector2(16, 16)
+target_position = Vector2(0, 32)
+collision_mask = 6
+
+[node name="Interaction" type="RayCast2D" parent="."]
+z_index = 1
+position = Vector2(16, 16)
+target_position = Vector2(0, 32)
+collision_mask = 8
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = SubResource("TileSet_tpgbh")
+format = 2
+
+[node name="interactionArea" type="Area2D" parent="."]
+position = Vector2(16, 0)
+rotation = 6.28319
+collision_mask = 8
+
+[node name="interactionShape" type="CollisionShape2D" parent="interactionArea"]
+position = Vector2(1.90735e-06, 9.53674e-07)
+shape = SubResource("CapsuleShape2D_668vx")
+
+[connection signal="area_entered" from="interactionArea" to="." method="_on_interaction_area_area_entered"]
+[connection signal="area_exited" from="interactionArea" to="." method="_on_interaction_area_area_exited"]
