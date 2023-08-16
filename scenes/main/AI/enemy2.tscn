@@ -1,8 +1,9 @@
-[gd_scene load_steps=28 format=3 uid="uid://ccs76ma86w87c"]
+[gd_scene load_steps=29 format=3 uid="uid://cp01iwgck7lab"]
 
-[ext_resource type="Script" path="res://scripts/enemy.gd" id="1_d2dxj"]
-[ext_resource type="Resource" uid="uid://qohv1kkpkxss" path="res://dialogue/testNPC.dialogue" id="2_aoiyr"]
-[ext_resource type="Texture2D" uid="uid://b6cuac4oobhux" path="res://gfx/player/playersprite.png" id="2_itbha"]
+[ext_resource type="Script" path="res://scripts/enemy.gd" id="1_h0d1f"]
+[ext_resource type="Texture2D" uid="uid://b6cuac4oobhux" path="res://gfx/player/playersprite.png" id="2_0x7of"]
+[ext_resource type="Resource" uid="uid://dll3qwndseivr" path="res://dialogue/testNPC2.dialogue" id="2_a4uli"]
+[ext_resource type="Script" path="res://addons/dialogue_manager/dialogue_label.gd" id="3_s0fsv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p7mhe"]
 size = Vector2(32, 32)
@@ -230,14 +231,14 @@ transitions = ["Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_
 
 [node name="enemyBody" type="CharacterBody2D"]
 collision_layer = 4
-script = ExtResource("1_d2dxj")
+script = ExtResource("1_h0d1f")
 dialogueString = "start"
-dialogueResource = ExtResource("2_aoiyr")
+dialogueResource = ExtResource("2_a4uli")
 
 [node name="enemySprite" type="Sprite2D" parent="."]
 position = Vector2(16, 0)
 scale = Vector2(0.75, 0.75)
-texture = ExtResource("2_itbha")
+texture = ExtResource("2_0x7of")
 hframes = 4
 vframes = 4
 
@@ -259,12 +260,19 @@ parameters/Idle/blend_position = Vector2(0, 0)
 parameters/Walk/blend_position = Vector2(0, 0)
 
 [node name="interactArea" type="Area2D" parent="."]
-collision_layer = 12
+collision_layer = 8
 
 [node name="interactShape" type="CollisionShape2D" parent="interactArea"]
 z_index = 2
 position = Vector2(16, 16)
 shape = SubResource("RectangleShape2D_p7mhe")
+
+[node name="Dialogue" type="RichTextLabel" parent="."]
+offset_left = -32.0
+offset_top = -106.0
+offset_right = 69.0
+offset_bottom = -24.0
+script = ExtResource("3_s0fsv")
 
 [connection signal="body_entered" from="interactArea" to="." method="_on_interact_area_body_entered"]
 [connection signal="body_exited" from="interactArea" to="." method="_on_interact_area_body_exited"]

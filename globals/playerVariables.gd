@@ -5,3 +5,5 @@ extends Node
 # Movement / Interaction variables
 
 var isTalking: bool = false
+var isBoy: bool = false
+var isGirl: bool = false
