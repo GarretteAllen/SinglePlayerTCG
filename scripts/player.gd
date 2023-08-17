@@ -20,7 +20,7 @@ var initialPosition = Vector2(0, 0)
 var inputDirection = Vector2(0, 0)
 var isMoving = false
 var percentMovedToNextTile = 0.0
-@export var walk_speed = 4.0
+@export var walk_speed = 6.0
 
 # Various variables and signals 
 
@@ -57,6 +57,8 @@ func processPlayerInput():
 	if inputDirection != Vector2.ZERO:
 		animTree.set("parameters/Idle/blend_position", inputDirection)
 		animTree.set("parameters/Walk/blend_position", inputDirection)
+		#if Input.is_action_pressed("run"):
+			#animTree.advance(walk_speed)
 		initialPosition = position
 		isMoving = true
 	else:
@@ -69,17 +71,26 @@ func playerMove(delta):
 	collisionRay.target_position = desiredStep
 	interactionRay.target_position = desiredStep
 	if !collisionRay.is_colliding():
+		if Input.is_action_pressed("run"):
+			percentMovedToNextTile += (walk_speed * .5) * delta
 		percentMovedToNextTile += walk_speed * delta
 		if percentMovedToNextTile >= 1.0:
-			position = initialPosition.snapped(Vector2(0,0)) + (TILE_SIZE * inputDirection)
+			position = initialPosition + (TILE_SIZE * inputDirection)
 			percentMovedToNextTile = 0.0
 			isMoving = false
 		else:
-			position = initialPosition.snapped(Vector2(0,0)) + (TILE_SIZE * inputDirection * percentMovedToNextTile)
+			position = initialPosition + (TILE_SIZE * inputDirection * percentMovedToNextTile)
+			
+			# Found myself clipping through walls, temporary solution until I can 
+			# Find a more permanent fix.
+			
+			if percentMovedToNextTile <= 0.2:
+				position = initialPosition
 	else:
 		animState.travel("Idle")
 		percentMovedToNextTile = 0.0
 		isMoving = false
+
 
 # Handle player interaction ** WIP **
 
@@ -89,8 +100,12 @@ func interaction():
 			interactPressed.emit()
 
 
+# Unsure if I will need this, will mostly handle collision on objects rather 
+# Than on the player itself.
+
 func _on_interaction_area_area_entered(_area):
-	pass # Replace with function body.
+	#print("test")
+	pass
 
 
 func _on_interaction_area_area_exited(_area):

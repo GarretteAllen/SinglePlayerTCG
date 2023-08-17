@@ -227,18 +227,18 @@ states/Start/position = Vector2(41, 100)
 states/Walk/node = SubResource("AnimationNodeBlendSpace2D_85dqw")
 states/Walk/position = Vector2(320, 51)
 transitions = ["Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_kvvex"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_fx4la")]
+graph_offset = Vector2(-100, -57)
 
 [sub_resource type="TileSet" id="TileSet_tpgbh"]
 tile_size = Vector2i(32, 32)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_668vx"]
 radius = 16.0
-height = 64.0
+height = 64.794
 
 [node name="playerBody" type="CharacterBody2D"]
 z_index = 1
-y_sort_enabled = true
-collision_mask = 6
+collision_mask = 14
 script = ExtResource("1_cl850")
 
 [node name="playerSprite" type="Sprite2D" parent="."]
@@ -262,7 +262,7 @@ tree_root = SubResource("AnimationNodeStateMachine_6jpfl")
 anim_player = NodePath("../playerAnimation")
 active = true
 parameters/Idle/blend_position = Vector2(0, 0)
-parameters/Walk/blend_position = Vector2(0, 0)
+parameters/Walk/blend_position = Vector2(0.0582362, 1.39301)
 
 [node name="Collision" type="RayCast2D" parent="."]
 position = Vector2(16, 16)
@@ -273,9 +273,8 @@ collision_mask = 6
 z_index = 1
 position = Vector2(16, 16)
 target_position = Vector2(0, 32)
-collision_mask = 8
+collision_mask = 10
 collide_with_areas = true
-collide_with_bodies = false
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_tpgbh")
@@ -284,11 +283,14 @@ format = 2
 [node name="interactionArea" type="Area2D" parent="."]
 position = Vector2(16, 0)
 rotation = 6.28319
-collision_mask = 8
+collision_mask = 14
+priority = 1
 
 [node name="interactionShape" type="CollisionShape2D" parent="interactionArea"]
 position = Vector2(1.90735e-06, 9.53674e-07)
 shape = SubResource("CapsuleShape2D_668vx")
+
+[node name="Camera2D" type="Camera2D" parent="."]
 
 [connection signal="area_entered" from="interactionArea" to="." method="_on_interaction_area_area_entered"]
 [connection signal="area_exited" from="interactionArea" to="." method="_on_interaction_area_area_exited"]
